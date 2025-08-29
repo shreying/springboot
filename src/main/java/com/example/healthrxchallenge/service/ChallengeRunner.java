@@ -15,9 +15,9 @@ public class ChallengeRunner implements CommandLineRunner {
 
     // --- Configuration Details ---
     private static final String GENERATE_WEBHOOK_URL = "https://bfhldevapigw.healthrx.co.in/hiring/generateWebhook/JAVA";
-    private static final String MY_NAME = "John Doe";
-    private static final String MY_REG_NO = "REG12347";
-    private static final String MY_EMAIL = "john@example.com";
+    private static final String MY_NAME = "Shreya Sahu";
+    private static final String MY_REG_NO = "22BCG10027";
+    private static final String MY_EMAIL = "shreyasahu2022@vitbhopal.ac.in";
 
     public ChallengeRunner(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -64,11 +64,8 @@ public class ChallengeRunner implements CommandLineRunner {
     }
 
     private String solveSqlProblem() {
-        // The problem is chosen based on the last two digits of the registration number.
-        // For "REG12347", the last two digits are 47, which is ODD.
-        // Therefore, we use the solution for Question 1.
 
-        return "WITH HighestPayment AS (SELECT EMP_ID, AMOUNT FROM PAYMENTS WHERE EXTRACT(DAY FROM PAYMENT_TIME) != 1 ORDER BY AMOUNT DESC LIMIT 1) SELECT hp.AMOUNT AS SALARY, CONCAT(e.FIRST_NAME, ' ', e.LAST_NAME) AS NAME, TIMESTAMPDIFF(YEAR, e.DOB, CURDATE()) AS AGE, d.DEPARTMENT_NAME FROM HighestPayment hp JOIN EMPLOYEE e ON hp.EMP_ID = e.EMP_ID JOIN DEPARTMENT d ON e.DEPARTMENT = d.DEPARTMENT_ID;";
+        return "WITH HighestPayment AS (SELECT EMP_ID, AMOUNT FROM PAYMENTS WHERE EXTRACT(DAY FROM PAYMENT_TIME) <> 1 ORDER BY AMOUNT DESC LIMIT 1) SELECT hp.AMOUNT AS SALARY, CONCAT(e.FIRST_NAME, ' ', e.LAST_NAME) AS NAME, e.DOB AS DATE_OF_BIRTH, d.DEPARTMENT_NAME FROM HighestPayment hp JOIN EMPLOYEE e ON hp.EMP_ID = e.EMP_ID JOIN DEPARTMENT d ON e.DEPARTMENT = d.DEPARTMENT_ID;";
     }
 
     private void submitSolution(WebhookResponse webhookDetails, String finalQuery) {
